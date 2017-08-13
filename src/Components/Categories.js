@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchCategories } from '../Actions'
+import { Link } from 'react-router-dom'
 
 class Categories extends Component {
 
@@ -9,11 +10,13 @@ class Categories extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div>
         <ul>{this.props.categories.map((category) => (
-          <li key={category.name}>{category.name}</li>
+          <li key={category.name}><Link to={{
+            pathname: "/" + category.path,
+            state: { category: category.name }
+          }}>{category.name}</Link></li>
       ))}</ul>
     </div>
     )
