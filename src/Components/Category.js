@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchCatPosts } from '../Actions'
+import { Link } from 'react-router-dom'
 
 class Category extends Component {
 
@@ -12,10 +13,13 @@ class Category extends Component {
     const {posts} = this.props
 
     return (
-      <div>
+      <div className="container">
         <ul>
           {posts.map((post) => (
-            <li key={post.id}>{post.title} : {post.body}</li>
+            <li key={post.id}><Link to={{
+              pathname: "/" + post.category + "/" + post.id,
+              state: { post_id: post.id }
+            }}>{post.title} : {post.body}</Link></li>
           ))}
         </ul>
       </div>

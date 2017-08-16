@@ -14,7 +14,7 @@ class Index extends Component {
     const { categories, posts } = this.props
 
     return (
-      <div>
+      <div className="container">
         <ul>{categories.map((category) => (
           <li key={category.name}><Link to={{
             pathname: "/" + category.path,
