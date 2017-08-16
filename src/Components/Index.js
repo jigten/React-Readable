@@ -17,8 +17,7 @@ class Index extends Component {
       <div className="container">
         <ul>{categories.map((category) => (
           <li key={category.name}><Link to={{
-            pathname: "/" + category.path,
-            state: { category: category.name }
+            pathname: "/" + category.path
           }}>{category.name}</Link></li>
       ))}</ul>
 
