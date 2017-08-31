@@ -15,6 +15,13 @@ class Index extends Component {
 
     return (
       <div className="container">
+
+        <div className="test-xs-right">
+          <Link className="btn btn-primary" to="/post/new">
+            Add a Post
+          </Link>
+        </div>
+
         <ul>{categories.map((category) => (
           <li key={category.name}><Link to={{
             pathname: "/" + category.path

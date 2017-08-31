@@ -8,6 +8,7 @@ if (!token)
 export const FETCH_CATEGORIES = 'FETCH_CATEGORIES'
 export const FETCH_POST = 'FETCH_POST'
 export const FETCH_POSTS = 'FETCH_POSTS'
+export const CREATE_POST = 'CREATE_POST'
 export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS'
 export const FETCH_POST_COMMENTS = 'FETCH_POST_COMMENTS'
 
@@ -43,6 +44,17 @@ export function fetchPosts() {
 
   return {
     type: FETCH_POSTS,
+    payload: request
+  }
+}
+
+export function createPost(values, callback) {
+  const request = axios.post(`${ROOT_URL}/posts`, values, {
+    headers: {'Authorization': token}
+  }).then(() => callback())
+
+  return {
+    type: CREATE_POST,
     payload: request
   }
 }
