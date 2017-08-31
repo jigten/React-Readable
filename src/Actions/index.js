@@ -9,6 +9,7 @@ export const FETCH_CATEGORIES = 'FETCH_CATEGORIES'
 export const FETCH_POST = 'FETCH_POST'
 export const FETCH_POSTS = 'FETCH_POSTS'
 export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS'
+export const FETCH_POST_COMMENTS = 'FETCH_POST_COMMENTS'
 
 export function fetchCategories() {
   const url = `${ROOT_URL}/categories`
@@ -54,6 +55,18 @@ export function fetchCatPosts(category) {
 
   return {
     type: FETCH_CATEGORY_POSTS,
+    payload: request
+  }
+}
+
+export function fetchComments(id) {
+  const url = `${ROOT_URL}/posts/${id}/comments`
+  const request = axios.get(url, {
+    headers: {'Authorization': token}
+  })
+
+  return {
+    type: FETCH_POST_COMMENTS,
     payload: request
   }
 }

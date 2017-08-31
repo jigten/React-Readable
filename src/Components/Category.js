@@ -16,15 +16,15 @@ class Category extends Component {
     return (
       <div className="container">
         <div className="row">
-          <h1 class="my-4">{this.props.match.params.category} <small>Posts</small></h1>
+          <h1 className="my-4">{this.props.match.params.category} <small>Posts</small></h1>
           <ul>
             {posts.map((post) => (
               <div key={post.id} className="card mb-4">
                 <div className="card-body">
                   <h2 className="card-title">{post.title}</h2>
-                  <Link to={{
+                  <Link className="btn btn-primary" to={{
                     pathname: "/" + post.category + "/" + post.id
-                  }}><a className="btn btn-primary">Read More &rarr;</a></Link>
+                  }}>Read More &rarr;</Link>
                 </div>
                 <div className="card-footer text-muted">
                       Posted on <Moment format="YYYY/MM/DD">{post.timestamp}</Moment> by {post.author}
