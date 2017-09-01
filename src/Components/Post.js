@@ -17,17 +17,12 @@ class Post extends Component {
     const { comments } = this.props
     return(
       <div className="container">
-        <div className="row">
-          <h1 className="mt-4">{post.title}</h1>
-          <p className="lead">
-            by {post.author}
-          </p>
-          <hr />
-          <p><Moment format="YYYY/MM/DD">{post.timestamp}</Moment></p>
-          <hr />
-          <p className="lead">{post.body}</p>
+        <div className="blog-post">
+          <h2 className="blog-post-title">{post.title}</h2>
+          <p className="blog-post-meta"><Moment format="YYYY/MM/DD">{post.timestamp}</Moment> by {post.author}</p>
+          <p>{post.body}</p>
         </div>
-        <hr />
+
         {comments.map((comment) => (
           <div className="media mb-4">
             <div className="media-body">
