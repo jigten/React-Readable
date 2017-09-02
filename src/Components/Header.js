@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 export default class Header extends Component {
   render() {
-    console.log(this.props)
     return (
       <nav className="navbar navbar-toggleable-md navbar-light bg-faded">
         <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,11 +16,28 @@ export default class Header extends Component {
                 Home <span className="sr-only">(current)</span>
               </Link>
             </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/post/new">
-            Create Post
-          </Link>
-        </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/react">
+                React
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/redux">
+                Redux
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/udacity">
+                Udacity
+              </Link>
+            </li>
+          </ul>
+          <ul className="nav navbar-nav navbar-right">
+            <li>
+              <Link className="nav-link" to="/post/new">
+                Create Post
+              </Link>
+            </li>
           </ul>
         </div>
       </nav>

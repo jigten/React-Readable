@@ -10,6 +10,7 @@ export const FETCH_POST = 'FETCH_POST'
 export const FETCH_POSTS = 'FETCH_POSTS'
 export const CREATE_POST = 'CREATE_POST'
 export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS'
+export const VOTE_POST = 'VOTE_POST'
 export const FETCH_POST_COMMENTS = 'FETCH_POST_COMMENTS'
 
 export function fetchCategories() {
@@ -67,6 +68,17 @@ export function fetchCatPosts(category) {
 
   return {
     type: FETCH_CATEGORY_POSTS,
+    payload: request
+  }
+}
+
+export function votePost(id, values, callback) {
+  const request = axios.post(`${ROOT_URL}/posts/${id}`, values, {
+    headers: {'Authorization': token}
+  }).then(() => callback())
+
+  return {
+    type: VOTE_POST,
     payload: request
   }
 }

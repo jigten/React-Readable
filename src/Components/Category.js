@@ -10,6 +10,13 @@ class Category extends Component {
     this.props.loadPosts(this.props.match.params.category)
   }
 
+  componentWillReceiveProps(nextProps) {
+    let nextCategory = nextProps.match.params.category
+    if (nextCategory !== this.props.match.params.category) {
+      this.props.loadPosts(nextCategory)
+    }
+  }
+
   render() {
     const {posts} = this.props
 
