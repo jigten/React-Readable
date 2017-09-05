@@ -57,8 +57,8 @@ class Category extends Component {
                   <Link style={{marginBottom: "10px"}} className="btn btn-primary" to={{
                     pathname: "/" + post.category + "/" + post.id
                   }}>Read More &rarr;</Link><br />
-                  <a href="#" style={{paddingRight: "20px"}}class="card-link">Edit Post</a>
-                  <a href="#" class="card-link">Delete Post</a>
+                  <a style={{paddingRight: "20px"}}class="card-link">Edit Post</a>
+                  <a class="card-link">Delete Post</a>
                 </div>
               </div>
             ))}

@@ -8,7 +8,7 @@ export default function(state = [], action) {
       return [ action.payload.data ]
 
     case FETCH_POSTS:
-      return [ ...action.payload.data ]
+      return [...action.payload.data]
 
     case FETCH_CATEGORY_POSTS:
       return [...action.payload.data]

@@ -16,20 +16,21 @@ export default class Header extends Component {
                 Home <span className="sr-only">(current)</span>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/react">
-                React
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/redux">
-                Redux
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/udacity">
-                Udacity
-              </Link>
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Categories
+              </a>
+              <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <Link className="dropdown-item" to="/react">
+                  React
+                </Link>
+                <Link className="dropdown-item" to="/redux">
+                  Redux
+                </Link>
+                <Link className="dropdown-item" to="/udacity">
+                  Udacity
+                </Link>
+              </div>
             </li>
           </ul>
           <ul className="nav navbar-nav navbar-right">

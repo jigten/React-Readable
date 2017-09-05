@@ -32,7 +32,6 @@ class Post extends Component {
   }
 
   render() {
-    console.log(this.props)
     const post = this.props.posts[0]
     const { comments } = this.props
     return(
@@ -46,9 +45,10 @@ class Post extends Component {
             </div>
             <hr />
             <p className="blog-post-meta">
-              <span onClick={this.upVotePost}><i className="fa fa-level-up" aria-hidden="true"></i></span>
+              <span style={{ marginRight: "5px" }} onClick={this.upVotePost}><i className="fa fa-level-up" aria-hidden="true"></i></span>
                 {post.voteScore}
-              <span onClick={this.downVotePost}><i className="fa fa-level-down" aria-hidden="true"></i></span>
+              <span style={{ marginLeft: "5px" }} onClick={this.downVotePost}><i className="fa fa-level-down" aria-hidden="true"></i></span>
+              <i style={{ marginLeft: "30px" }} className="fa fa-comments" aria-hidden="true"></i> {comments.length}
             </p>
           </div>
           <div className="container">
