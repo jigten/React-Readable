@@ -22,9 +22,7 @@ class Category extends Component {
     const value = {
       option: "upVote"
     }
-    this.props.votePost(POST_ID, value, () => {
-      this.props.loadPosts(this.props.match.params.category)
-    })
+    this.props.votePost(POST_ID, value)
   }
 
   downVotePost = (post) => {
@@ -32,9 +30,7 @@ class Category extends Component {
     const value = {
       option: "downVote"
     }
-    this.props.votePost(POST_ID, value, () => {
-      this.props.loadPosts(this.props.match.params.category)
-    })
+    this.props.votePost(POST_ID, value)
   }
 
   render() {
@@ -57,8 +53,8 @@ class Category extends Component {
                   <Link style={{marginBottom: "10px"}} className="btn btn-primary" to={{
                     pathname: "/" + post.category + "/" + post.id
                   }}>Read More &rarr;</Link><br />
-                  <a style={{paddingRight: "20px"}}class="card-link">Edit Post</a>
-                  <a class="card-link">Delete Post</a>
+                  <a className="card-link">Edit Post</a>
+                  <a className="card-link">Delete Post</a>
                 </div>
               </div>
             ))}
@@ -78,7 +74,7 @@ class Category extends Component {
   function mapDispatchToProps(dispatch) {
     return {
       loadPosts: (category) => dispatch(fetchCatPosts(category)),
-      votePost: (postId, type, callback) => dispatch(votePost(postId, type, callback))
+      votePost: (postId, type) => dispatch(votePost(postId, type))
     }
   }
 

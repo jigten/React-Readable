@@ -62,7 +62,6 @@ class PostsNew extends Component {
 
   render() {
     const { handleSubmit } = this.props
-    console.log(this.props)
 
     return (
       <div className="container">
@@ -83,13 +82,11 @@ class PostsNew extends Component {
             name="author"
             component={this.renderField}
           />
-
           <Field
             label="Category"
             name="category"
             component={this.renderSelect}
           />
-
           <button type="submit" className="btn btn-primary">Submit</button>
           <Link to="/" className="btn btn-danger">Cancel</Link>
         </form>

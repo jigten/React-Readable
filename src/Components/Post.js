@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPost, fetchComments, votePost } from '../Actions'
+import { fetchPost, fetchComments, votePost, createComment, voteComment } from '../Actions'
 import Moment from 'react-moment';
+import { Field, reduxForm } from 'redux-form'
 
 class Post extends Component {
 
@@ -16,9 +17,7 @@ class Post extends Component {
     const value = {
       option: "upVote"
     }
-    this.props.votePost(POST_ID, value, () => {
-      this.props.loadPost(POST_ID)
-    })
+    this.props.votePost(POST_ID, value)
   }
 
   downVotePost = () => {
@@ -26,14 +25,59 @@ class Post extends Component {
     const value = {
       option: "downVote"
     }
-    this.props.votePost(POST_ID, value, () => {
-      this.props.loadPost(POST_ID)
+    this.props.votePost(POST_ID, value)
+  }
+
+  upVoteComment = (comment) => {
+    const COMMENT_ID = comment.id
+    const value = {
+      option: "upVote"
+    }
+    this.props.voteComment(COMMENT_ID, value)
+  }
+
+  downVoteComment = (comment) => {
+    const COMMENT_ID = comment.id
+    const value = {
+      option: "downVote"
+    }
+    this.props.voteComment(COMMENT_ID, value)
+  }
+
+  renderField = (field) => {
+    const { meta: { touched, error } } = field
+    const className = `form-group ${touched && error ? 'has-danger' : ''}`
+
+    return (
+      <div className={className}>
+        <label>{field.label}</label>
+        <input
+          className="form-control"
+          type="text"
+          {...field.input}
+        />
+        <div className="text-help">
+          {touched ? error : ''}
+        </div>
+      </div>
+    )
+  }
+
+  onSubmit = (values) => {
+    const POST_ID = this.props.match.params.post_id
+    values['id'] = Math.random().toString(36).substr(-8)
+    values['timestamp'] = Date.now()
+    values['parentId'] = this.props.posts[0].id
+    this.props.createComment(values, () => {
+      this.props.loadComments(POST_ID)
     })
   }
 
   render() {
     const post = this.props.posts[0]
     const { comments } = this.props
+    const { handleSubmit } = this.props
+
     return(
         <div style={{ paddingTop: "20px" }} className="container">
           <div className="blog-post">
@@ -54,10 +98,29 @@ class Post extends Component {
           <div className="container">
             <div className="comments">
               <h3 className="mb-2">Comments</h3>
+              <form style={{ paddingBottom: "20px" }} onSubmit={handleSubmit(this.onSubmit)}>
+                <Field
+                  label="Author"
+                  name="author"
+                  component={this.renderField}
+                />
+                <Field
+                  label="Body"
+                  name="body"
+                  component={this.renderField}
+                />
+                <button type="submit" className="btn btn-primary">Submit</button>
+              </form>
               {comments.map((comment) => (
                 <div key={comment.id} className="comment">
                   <div className="comment-content">
-                    <h6 className="small comment-meta">{comment.author} <Moment format="YYYY/MM/DD">{comment.timestamp}</Moment></h6>
+                    <h6 className="small comment-meta">
+                      {comment.author}
+                      <Moment format="YYYY/MM/DD">{comment.timestamp}</Moment>
+                      <span style={{ marginRight: "5px", marginLeft: "10px" }} onClick={this.upVoteComment.bind(this, comment)}><i className="fa fa-level-up" aria-hidden="true"></i></span>
+                        {comment.voteScore}
+                      <span style={{ marginLeft: "5px" }} onClick={this.downVoteComment.bind(this, comment)}><i className="fa fa-level-down" aria-hidden="true"></i></span>
+                    </h6>
                     <div className="comment-body">
                       <p>{comment.body}</p>
                     </div>
@@ -71,6 +134,20 @@ class Post extends Component {
   }
 }
 
+function validate(values) {
+  const errors = {}
+
+  if(!values.author) {
+    errors.author = "Please enter your username!"
+  }
+
+  if(!values.body) {
+    errors.body = "Please enter some content!"
+  }
+
+  return errors
+}
+
 function mapStateToProps({ posts, comments }) {
   return {
     posts,
@@ -82,8 +159,15 @@ function mapDispatchToProps(dispatch) {
   return {
     loadPost: (postId) => dispatch(fetchPost(postId)),
     loadComments: (postId) => dispatch(fetchComments(postId)),
-    votePost: (postId, type, callback) => dispatch(votePost(postId, type, callback))
+    votePost: (postId, type) => dispatch(votePost(postId, type)),
+    createComment: (comment, callback) => dispatch(createComment(comment, callback)),
+    voteComment: (commentId, type) => dispatch(voteComment(commentId, type))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Post)
+export default reduxForm({
+  validate,
+  form: 'CommentsNewForm'
+})(
+  connect(mapStateToProps, mapDispatchToProps)(Post)
+)

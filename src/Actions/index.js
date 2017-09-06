@@ -12,6 +12,8 @@ export const CREATE_POST = 'CREATE_POST'
 export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS'
 export const VOTE_POST = 'VOTE_POST'
 export const FETCH_POST_COMMENTS = 'FETCH_POST_COMMENTS'
+export const CREATE_COMMENT = 'CREATE_COMMENT'
+export const VOTE_COMMENT = 'VOTE_COMMENT'
 
 export function fetchCategories() {
   const url = `${ROOT_URL}/categories`
@@ -72,10 +74,10 @@ export function fetchCatPosts(category) {
   }
 }
 
-export function votePost(id, values, callback) {
+export function votePost(id, values) {
   const request = axios.post(`${ROOT_URL}/posts/${id}`, values, {
     headers: {'Authorization': token}
-  }).then(() => callback())
+  })
 
   return {
     type: VOTE_POST,
@@ -91,6 +93,29 @@ export function fetchComments(id) {
 
   return {
     type: FETCH_POST_COMMENTS,
+    payload: request
+  }
+}
+
+export function createComment(values, callback) {
+  const url = `${ROOT_URL}/comments`
+  const request = axios.post(url, values, {
+    headers: {'Authorization': token}
+  }).then(() => callback())
+
+  return {
+    type: CREATE_COMMENT,
+    payload: request
+  }
+}
+
+export function voteComment(id, values) {
+  const request = axios.post(`${ROOT_URL}/comments/${id}`, values, {
+    headers: {'Authorization': token}
+  })
+
+  return {
+    type: VOTE_COMMENT,
     payload: request
   }
 }
