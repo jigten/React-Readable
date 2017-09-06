@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCatPosts, votePost } from '../Actions'
+import { fetchCatPosts, votePost, deletePost } from '../Actions'
 import { Link } from 'react-router-dom'
 import Moment from 'react-moment';
 
@@ -33,8 +33,12 @@ class Category extends Component {
     this.props.votePost(POST_ID, value)
   }
 
+  removePost = (post) => {
+    this.props.deletePost(post.id)
+  }
+
   render() {
-    const {posts} = this.props
+    const {posts, history} = this.props
 
     return (
       <div className="container">
@@ -53,8 +57,10 @@ class Category extends Component {
                   <Link style={{marginBottom: "10px"}} className="btn btn-primary" to={{
                     pathname: "/" + post.category + "/" + post.id
                   }}>Read More &rarr;</Link><br />
-                  <a className="card-link">Edit Post</a>
-                  <a className="card-link">Delete Post</a>
+                  <Link className="card-link" to={{
+                    pathname: `${history.location.pathname}/${post.id}/edit`
+                  }}>Edit Post</Link>
+                  <span className="card-link" onClick={this.removePost.bind(this, post)}><a>Delete Post</a></span>
                 </div>
               </div>
             ))}
@@ -74,7 +80,8 @@ class Category extends Component {
   function mapDispatchToProps(dispatch) {
     return {
       loadPosts: (category) => dispatch(fetchCatPosts(category)),
-      votePost: (postId, type) => dispatch(votePost(postId, type))
+      votePost: (postId, type) => dispatch(votePost(postId, type)),
+      deletePost: (postId) => dispatch(deletePost(postId))
     }
   }
 

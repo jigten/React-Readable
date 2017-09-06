@@ -1,4 +1,4 @@
-import { FETCH_POST_COMMENTS, VOTE_COMMENT } from '../Actions/index'
+import { FETCH_POST_COMMENTS, VOTE_COMMENT, CREATE_COMMENT } from '../Actions/index'
 
 export default function(state = [], action) {
 
@@ -6,6 +6,9 @@ export default function(state = [], action) {
 
     case FETCH_POST_COMMENTS:
       return [ ...action.payload.data ]
+
+    case CREATE_COMMENT:
+      return [ ...state, action.payload ]
 
     case VOTE_COMMENT:
       let newComment = action.payload.data

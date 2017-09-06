@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPost, fetchComments, votePost, createComment, voteComment } from '../Actions'
+import { fetchPost, fetchComments, votePost, createComment, voteComment, deleteAPost } from '../Actions'
 import Moment from 'react-moment';
 import { Field, reduxForm } from 'redux-form'
+import { Link } from 'react-router-dom'
 
 class Post extends Component {
 
@@ -64,19 +65,24 @@ class Post extends Component {
   }
 
   onSubmit = (values) => {
-    const POST_ID = this.props.match.params.post_id
     values['id'] = Math.random().toString(36).substr(-8)
     values['timestamp'] = Date.now()
     values['parentId'] = this.props.posts[0].id
-    this.props.createComment(values, () => {
-      this.props.loadComments(POST_ID)
+    this.props.createComment(values)
+  }
+
+  removePost = () => {
+    const POST_ID = this.props.match.params.post_id
+    this.props.deletePost(POST_ID, () => {
+      this.props.history.goBack()
     })
   }
 
   render() {
     const post = this.props.posts[0]
-    const { comments } = this.props
+    const { comments, history } = this.props
     const { handleSubmit } = this.props
+    console.log(this.props)
 
     return(
         <div style={{ paddingTop: "20px" }} className="container">
@@ -94,6 +100,10 @@ class Post extends Component {
               <span style={{ marginLeft: "5px" }} onClick={this.downVotePost}><i className="fa fa-level-down" aria-hidden="true"></i></span>
               <i style={{ marginLeft: "30px" }} className="fa fa-comments" aria-hidden="true"></i> {comments.length}
             </p>
+            <Link className="card-link" to = {{
+              pathname: `${history.location.pathname}/edit`
+            }}>Edit Comment</Link>
+            <span className="card-link" onClick={this.removePost}><a>Delete Post</a></span>
           </div>
           <div className="container">
             <div className="comments">
@@ -160,8 +170,9 @@ function mapDispatchToProps(dispatch) {
     loadPost: (postId) => dispatch(fetchPost(postId)),
     loadComments: (postId) => dispatch(fetchComments(postId)),
     votePost: (postId, type) => dispatch(votePost(postId, type)),
-    createComment: (comment, callback) => dispatch(createComment(comment, callback)),
-    voteComment: (commentId, type) => dispatch(voteComment(commentId, type))
+    createComment: (comment) => dispatch(createComment(comment)),
+    voteComment: (commentId, type) => dispatch(voteComment(commentId, type)),
+    deletePost: (postId, callback) => dispatch(deleteAPost(postId, callback))
   }
 }
 

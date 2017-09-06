@@ -9,8 +9,11 @@ export const FETCH_CATEGORIES = 'FETCH_CATEGORIES'
 export const FETCH_POST = 'FETCH_POST'
 export const FETCH_POSTS = 'FETCH_POSTS'
 export const CREATE_POST = 'CREATE_POST'
+export const EDIT_POST = 'EDIT_POST'
 export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS'
 export const VOTE_POST = 'VOTE_POST'
+export const DELETE_POST = 'DELETE_POST'
+export const DELETE_SINGLE_POST = 'DELETE_SINGLE_POST'
 export const FETCH_POST_COMMENTS = 'FETCH_POST_COMMENTS'
 export const CREATE_COMMENT = 'CREATE_COMMENT'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
@@ -62,6 +65,17 @@ export function createPost(values, callback) {
   }
 }
 
+export function editPost(id, values, callback) {
+  const request = axios.put(`${ROOT_URL}/posts/${id}`, values, {
+    headers: {'Authorization': token}
+  }).then(() => callback())
+
+  return {
+    type: EDIT_POST,
+    payload: request
+  }
+}
+
 export function fetchCatPosts(category) {
   const url = `${ROOT_URL}/${category}/posts`
   const request = axios.get(url, {
@@ -85,6 +99,28 @@ export function votePost(id, values) {
   }
 }
 
+export function deletePost(id) {
+  axios.delete(`${ROOT_URL}/posts/${id}`, {
+    headers: {'Authorization': token}
+  })
+
+  return {
+    type: DELETE_POST,
+    id
+  }
+}
+
+export function deleteAPost(id, callback) {
+  axios.delete(`${ROOT_URL}/posts/${id}`, {
+    headers: {'Authorization': token}
+  }).then(() => callback())
+
+  return {
+    type: DELETE_SINGLE_POST,
+    id
+  }
+}
+
 export function fetchComments(id) {
   const url = `${ROOT_URL}/posts/${id}/comments`
   const request = axios.get(url, {
@@ -97,15 +133,16 @@ export function fetchComments(id) {
   }
 }
 
-export function createComment(values, callback) {
+export function createComment(values) {
   const url = `${ROOT_URL}/comments`
-  const request = axios.post(url, values, {
+
+  axios.post(url, values, {
     headers: {'Authorization': token}
-  }).then(() => callback())
+  })
 
   return {
     type: CREATE_COMMENT,
-    payload: request
+    payload: values
   }
 }
 

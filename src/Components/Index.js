@@ -11,7 +11,9 @@ class Index extends Component {
   }
 
   render() {
+    console.log(this.props)
     const { categories, posts } = this.props
+    const postsArr = posts.filter(post => post.deleted !== true)
 
     return (
       <div className="container">
@@ -21,7 +23,7 @@ class Index extends Component {
           }}>{category.name}</Link></li>
         ))}</ul>
 
-        <ul>{posts.map((post) => (
+        <ul>{postsArr.map((post) => (
           <li key={post.id}>
             {post.title}: {post.body} CATEGORY: {post.category}
           </li>

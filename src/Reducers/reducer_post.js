@@ -1,4 +1,4 @@
-import { FETCH_POST, FETCH_POSTS, FETCH_CATEGORY_POSTS, VOTE_POST } from '../Actions/index'
+import { FETCH_POST, FETCH_POSTS, FETCH_CATEGORY_POSTS, VOTE_POST, DELETE_POST } from '../Actions/index'
 
 export default function(state = [], action) {
 
@@ -24,7 +24,11 @@ export default function(state = [], action) {
       })
 
       return [...newPostArr]
-      
+
+    case DELETE_POST:
+      let arr = [...state]
+      return arr.filter(post => post.id !== action.id)
+
     default:
       return state
   }
