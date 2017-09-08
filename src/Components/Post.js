@@ -102,7 +102,7 @@ class Post extends Component {
             </p>
             <Link className="card-link" to = {{
               pathname: `${history.location.pathname}/edit`
-            }}>Edit Comment</Link>
+            }}>Edit Post</Link>
             <span className="card-link" onClick={this.removePost}><a>Delete Post</a></span>
           </div>
           <div className="container">
