@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPostShow, fetchComments, votePost, createComment, voteComment, deleteAPost } from '../Actions'
+import { fetchPostShow, fetchComments, votePost, createComment, voteComment, deleteAPost, deleteComment } from '../Actions'
 import Moment from 'react-moment';
 import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
@@ -78,6 +78,10 @@ class Post extends Component {
     })
   }
 
+  deleteComment = (comment) => {
+    this.props.removeComment(comment.id)
+  }
+
   render() {
     const post = this.props.posts[0]
     const { comments, history } = this.props
@@ -125,13 +129,14 @@ class Post extends Component {
                   <div className="comment-content">
                     <h6 className="small comment-meta">
                       {comment.author}
-                      <Moment format="YYYY/MM/DD">{comment.timestamp}</Moment>
+                      <Moment style={{ marginLeft: "5px" }} format="YYYY/MM/DD">{comment.timestamp}</Moment>
                       <span style={{ marginRight: "5px", marginLeft: "10px" }} onClick={this.upVoteComment.bind(this, comment)}><i className="fa fa-level-up" aria-hidden="true"></i></span>
                         {comment.voteScore}
                       <span style={{ marginLeft: "5px", marginRight: "10px" }} onClick={this.downVoteComment.bind(this, comment)}><i className="fa fa-level-down" aria-hidden="true"></i></span>
                       <Link to={{
                         pathname: `${history.location.pathname}/comments/${comment.id}/edit`
                       }}>Edit</Link>
+                      <span style={{marginLeft: "10px"}} onClick={this.deleteComment.bind(this, comment)}>Delete</span>
                     </h6>
                     <div className="comment-body">
                       <p>{comment.body}</p>
@@ -174,7 +179,8 @@ function mapDispatchToProps(dispatch) {
     votePost: (postId, type) => dispatch(votePost(postId, type)),
     createComment: (comment) => dispatch(createComment(comment)),
     voteComment: (commentId, type) => dispatch(voteComment(commentId, type)),
-    deletePost: (postId, callback) => dispatch(deleteAPost(postId, callback))
+    deletePost: (postId, callback) => dispatch(deleteAPost(postId, callback)),
+    removeComment: (commentId) => dispatch(deleteComment(commentId))
   }
 }
 

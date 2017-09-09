@@ -1,4 +1,4 @@
-import { FETCH_POST_COMMENTS, VOTE_COMMENT, CREATE_COMMENT, FETCH_COMMENT } from '../Actions/index'
+import { FETCH_POST_COMMENTS, VOTE_COMMENT, CREATE_COMMENT, FETCH_COMMENT, DELETE_COMMENT } from '../Actions/index'
 
 export default function(state = [], action) {
 
@@ -24,6 +24,10 @@ export default function(state = [], action) {
       })
 
       return newCommentArr
+
+    case DELETE_COMMENT:
+      let arr = [...state]
+      return arr.filter(comment => comment.id !== action.id)
 
     default:
       return state

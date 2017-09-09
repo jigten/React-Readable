@@ -20,6 +20,7 @@ export const FETCH_COMMENT = 'FETCH_COMMENT'
 export const CREATE_COMMENT = 'CREATE_COMMENT'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
 export const EDIT_COMMENT = 'EDIT_COMMENT'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 export function fetchCategories() {
   const url = `${ROOT_URL}/categories`
@@ -192,5 +193,16 @@ export function editComment(id, values, callback) {
   return {
     type: EDIT_COMMENT,
     payload: request
+  }
+}
+
+export function deleteComment(id) {
+  axios.delete(`${ROOT_URL}/comments/${id}`, {
+    headers: {'Authorization': token}
+  })
+
+  return {
+    type: DELETE_COMMENT,
+    id
   }
 }
