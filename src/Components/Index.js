@@ -11,7 +11,6 @@ class Index extends Component {
   }
 
   render() {
-    console.log(this.props)
     const { categories, posts } = this.props
     const postsArr = posts.filter(post => post.deleted !== true)
 

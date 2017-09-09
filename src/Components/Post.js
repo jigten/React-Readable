@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPost, fetchComments, votePost, createComment, voteComment, deleteAPost } from '../Actions'
+import { fetchPostShow, fetchComments, votePost, createComment, voteComment, deleteAPost } from '../Actions'
 import Moment from 'react-moment';
 import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
@@ -82,7 +82,6 @@ class Post extends Component {
     const post = this.props.posts[0]
     const { comments, history } = this.props
     const { handleSubmit } = this.props
-    console.log(this.props)
 
     return(
         <div style={{ paddingTop: "20px" }} className="container">
@@ -129,7 +128,10 @@ class Post extends Component {
                       <Moment format="YYYY/MM/DD">{comment.timestamp}</Moment>
                       <span style={{ marginRight: "5px", marginLeft: "10px" }} onClick={this.upVoteComment.bind(this, comment)}><i className="fa fa-level-up" aria-hidden="true"></i></span>
                         {comment.voteScore}
-                      <span style={{ marginLeft: "5px" }} onClick={this.downVoteComment.bind(this, comment)}><i className="fa fa-level-down" aria-hidden="true"></i></span>
+                      <span style={{ marginLeft: "5px", marginRight: "10px" }} onClick={this.downVoteComment.bind(this, comment)}><i className="fa fa-level-down" aria-hidden="true"></i></span>
+                      <Link to={{
+                        pathname: `${history.location.pathname}/comments/${comment.id}/edit`
+                      }}>Edit</Link>
                     </h6>
                     <div className="comment-body">
                       <p>{comment.body}</p>
@@ -167,7 +169,7 @@ function mapStateToProps({ posts, comments }) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    loadPost: (postId) => dispatch(fetchPost(postId)),
+    loadPost: (postId) => dispatch(fetchPostShow(postId)),
     loadComments: (postId) => dispatch(fetchComments(postId)),
     votePost: (postId, type) => dispatch(votePost(postId, type)),
     createComment: (comment) => dispatch(createComment(comment)),

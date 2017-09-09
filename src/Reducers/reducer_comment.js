@@ -1,8 +1,11 @@
-import { FETCH_POST_COMMENTS, VOTE_COMMENT, CREATE_COMMENT } from '../Actions/index'
+import { FETCH_POST_COMMENTS, VOTE_COMMENT, CREATE_COMMENT, FETCH_COMMENT } from '../Actions/index'
 
 export default function(state = [], action) {
 
   switch (action.type) {
+
+    case FETCH_COMMENT:
+      return [ action.payload.data ]
 
     case FETCH_POST_COMMENTS:
       return [ ...action.payload.data ]

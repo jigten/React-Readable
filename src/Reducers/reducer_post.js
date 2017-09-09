@@ -1,10 +1,13 @@
-import { FETCH_POST, FETCH_POSTS, FETCH_CATEGORY_POSTS, VOTE_POST, DELETE_POST } from '../Actions/index'
+import { FETCH_POST, FETCH_POST_SHOW, FETCH_POSTS, FETCH_CATEGORY_POSTS, VOTE_POST, DELETE_POST } from '../Actions/index'
 
 export default function(state = [], action) {
 
   switch (action.type) {
 
     case FETCH_POST:
+      return [ action.payload.data ]
+
+    case FETCH_POST_SHOW:
       return [ action.payload.data ]
 
     case FETCH_POSTS:

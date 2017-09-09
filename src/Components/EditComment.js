@@ -2,25 +2,24 @@ import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { editPost, fetchPost } from '../Actions'
+import { fetchComment, editComment } from '../Actions'
 
 class EditPost extends Component {
 
   componentDidMount() {
-    this.props.loadPost(this.props.match.params.post_id)
+    this.props.loadComment(this.props.match.params.comment_id)
   }
 
   // handleInitialize = () => {
   //   const initData = {
-  //     "title" : this.props.post.title,
-  //     "body" : this.props.post.body
+  //     "body" : this.props.comment.body
   //   }
   //
   //   this.props.initialize(initData);
   // }
 
   renderField = (field) => {
-    const { post } = this.props
+    console.log(this.props)
     const { meta: { touched, error } } = field
     const className = `form-group ${touched && error ? 'has-danger' : ''}`
 
@@ -30,7 +29,6 @@ class EditPost extends Component {
         <input
           className="form-control"
           type="text"
-          value={post.title}
           {...field.input}
         />
         <div className="text-help">
@@ -41,24 +39,19 @@ class EditPost extends Component {
   }
 
   onSubmit = (values) => {
-    const { post } = this.props
-    this.props.updatePost(post.id, values, () => {
-      this.props.history.push('/')
+    const { comment } = this.props
+    values['timestamp'] = Date.now()
+    this.props.updateComment(comment.id, values, () => {
+      this.props.history.goBack()
     })
   }
 
   render() {
     const { handleSubmit } = this.props
-    console.log(this.props)
-
+    
     return (
       <div className="container">
         <form onSubmit={handleSubmit(this.onSubmit)}>
-          <Field
-            label="Title"
-            name="title"
-            component={this.renderField}
-          />
 
           <Field
             label="Body"
@@ -78,10 +71,6 @@ class EditPost extends Component {
 function validate(values) {
   const errors = {}
 
-  if (!values.title) {
-    errors.title = "Enter a title!"
-  }
-
   if(!values.body) {
     errors.body = "Please enter some content!"
   }
@@ -89,22 +78,22 @@ function validate(values) {
   return errors
 }
 
-function mapStateToProps({ posts }, ownProps) {
+function mapStateToProps({ comments }) {
   return {
-    post: posts[0]
+    comment: comments[0]
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    loadPost: (postId) => dispatch(fetchPost(postId)),
-    updatePost: (id, post, callback) => dispatch(editPost(id, post, callback))
+    loadComment: (commentId) => dispatch(fetchComment(commentId)),
+    updateComment: (id, post, callback) => dispatch(editComment(id, post, callback))
   }
 }
 
 export default reduxForm({
   validate,
-  form: 'PostsEditForm',
+  form: 'EditCommentForm',
   enableReinitialize: true,
   keepDirtyOnReinitialize: true
 })(
