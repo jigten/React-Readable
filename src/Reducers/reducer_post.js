@@ -1,4 +1,4 @@
-import { FETCH_POST, FETCH_POST_SHOW, FETCH_POSTS, FETCH_CATEGORY_POSTS, VOTE_POST, DELETE_POST } from '../Actions/index'
+import { FETCH_POST, SORT_SCORE, SORT_DATE, FETCH_POST_SHOW, FETCH_POSTS, FETCH_CATEGORY_POSTS, VOTE_POST, DELETE_POST } from '../Actions/index'
 
 export default function(state = [], action) {
 
@@ -12,6 +12,16 @@ export default function(state = [], action) {
 
     case FETCH_POSTS:
       return [...action.payload.data]
+
+    case SORT_SCORE:
+      return [...state].sort((a, b) => {
+        return b.voteScore-a.voteScore
+      })
+
+    case SORT_DATE:
+      return [...state].sort((a, b) => {
+        return b.timestamp-a.timestamp
+      })
 
     case FETCH_CATEGORY_POSTS:
       return [...action.payload.data]

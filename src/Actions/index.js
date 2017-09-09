@@ -9,6 +9,8 @@ export const FETCH_CATEGORIES = 'FETCH_CATEGORIES'
 export const FETCH_POST = 'FETCH_POST'
 export const FETCH_POST_SHOW = 'FETCH_POST_SHOW'
 export const FETCH_POSTS = 'FETCH_POSTS'
+export const SORT_DATE = 'SORT_DATE'
+export const SORT_SCORE = 'SORT_SCORE'
 export const CREATE_POST = 'CREATE_POST'
 export const EDIT_POST = 'EDIT_POST'
 export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS'
@@ -31,6 +33,18 @@ export function fetchCategories() {
   return {
     type: FETCH_CATEGORIES,
     payload: request
+  }
+}
+
+export function sortScore() {
+  return {
+    type: SORT_SCORE
+  }
+}
+
+export function sortDate() {
+  return {
+    type: SORT_DATE
   }
 }
 

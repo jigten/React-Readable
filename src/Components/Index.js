@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCategories, fetchPosts, votePost, deletePost } from '../Actions'
+import { fetchCategories, fetchPosts, votePost, deletePost, sortScore, sortDate } from '../Actions'
 import { Link } from 'react-router-dom'
 import Moment from 'react-moment';
 
@@ -31,12 +31,30 @@ class Index extends Component {
     this.props.deletePost(post.id)
   }
 
+  sortScore = () => {
+    this.props.sortScore()
+  }
+
+  sortDate = () => {
+    this.props.sortDate()
+  }
+
   render() {
     const { categories, posts } = this.props
     const postsArr = posts.filter(post => post.deleted !== true)
 
     return (
       <div style={{marginTop: "20px"}} className="container">
+        <div style={{marginBottom: "10px"}} className="dropdown">
+          <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort by
+          </button>
+          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <span onClick={this.sortDate}><a className="dropdown-item">Date</a></span>
+            <span onClick={this.sortScore}><a className="dropdown-item">Vote Score</a></span>
+          </div>
+        </div>
+
         {postsArr.map((post) => (
           <div key={post.id} style={{marginBottom: "20px"}} className="card">
             <div className="card-block">
@@ -74,7 +92,9 @@ function mapDispatchToProps(dispatch) {
     loadCategories: () => dispatch(fetchCategories()),
     loadPosts: () => dispatch(fetchPosts()),
     votePost: (postId, type) => dispatch(votePost(postId, type)),
-    deletePost: (postId) => dispatch(deletePost(postId))
+    deletePost: (postId) => dispatch(deletePost(postId)),
+    sortScore: () => dispatch(sortScore()),
+    sortDate: () => dispatch(sortDate())
   }
 }
 

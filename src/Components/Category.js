@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCatPosts, votePost, deletePost } from '../Actions'
+import { fetchCatPosts, votePost, deletePost, sortDate, sortScore } from '../Actions'
 import { Link } from 'react-router-dom'
 import Moment from 'react-moment';
 
@@ -33,6 +33,14 @@ class Category extends Component {
     this.props.votePost(POST_ID, value)
   }
 
+  sortScore = () => {
+    this.props.sortScore()
+  }
+
+  sortDate = () => {
+    this.props.sortDate()
+  }
+
   removePost = (post) => {
     this.props.deletePost(post.id)
   }
@@ -43,6 +51,16 @@ class Category extends Component {
     return (
       <div className="container">
         <h1>{this.props.match.params.category} <small>Posts</small></h1>
+        <div style={{marginBottom: "10px"}} className="dropdown">
+          <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort by
+          </button>
+          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <span onClick={this.sortDate}><a className="dropdown-item">Date</a></span>
+            <span onClick={this.sortScore}><a className="dropdown-item">Vote Score</a></span>
+          </div>
+        </div>
+
           <ul>
             {posts.map((post) => (
               <div key={post.id} style={{marginBottom: "20px"}} className="card">
@@ -81,7 +99,9 @@ class Category extends Component {
     return {
       loadPosts: (category) => dispatch(fetchCatPosts(category)),
       votePost: (postId, type) => dispatch(votePost(postId, type)),
-      deletePost: (postId) => dispatch(deletePost(postId))
+      deletePost: (postId) => dispatch(deletePost(postId)),
+      sortScore: () => dispatch(sortScore()),
+      sortDate: () => dispatch(sortDate())
     }
   }
 
