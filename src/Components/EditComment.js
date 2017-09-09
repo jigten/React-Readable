@@ -10,14 +10,6 @@ class EditPost extends Component {
     this.props.loadComment(this.props.match.params.comment_id)
   }
 
-  // handleInitialize = () => {
-  //   const initData = {
-  //     "body" : this.props.comment.body
-  //   }
-  //
-  //   this.props.initialize(initData);
-  // }
-
   renderField = (field) => {
     console.log(this.props)
     const { meta: { touched, error } } = field
@@ -48,7 +40,7 @@ class EditPost extends Component {
 
   render() {
     const { handleSubmit } = this.props
-    
+
     return (
       <div className="container">
         <form onSubmit={handleSubmit(this.onSubmit)}>

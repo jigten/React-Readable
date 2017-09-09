@@ -10,15 +10,6 @@ class EditPost extends Component {
     this.props.loadPost(this.props.match.params.post_id)
   }
 
-  // handleInitialize = () => {
-  //   const initData = {
-  //     "title" : this.props.post.title,
-  //     "body" : this.props.post.body
-  //   }
-  //
-  //   this.props.initialize(initData);
-  // }
-
   renderField = (field) => {
     const { post } = this.props
     const { meta: { touched, error } } = field
