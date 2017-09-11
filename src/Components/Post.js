@@ -86,67 +86,74 @@ class Post extends Component {
     const post = this.props.posts[0]
     const { comments, history } = this.props
     const { handleSubmit } = this.props
-
     return(
-        <div style={{ paddingTop: "20px" }} className="container">
-          <div className="blog-post">
-            <h2 className="blog-post-title">{post.title}</h2>
-            <p className="blog-post-meta"><Moment format="YYYY/MM/DD">{post.timestamp}</Moment> by {post.author}</p>
-          <hr />
-            <div className="card-body">
-              <p>{post.body}</p>
-            </div>
+      <div>
+        {post ? (
+          <div style={{ paddingTop: "20px" }} className="container">
+            <div className="blog-post">
+              <h2 className="blog-post-title">{post.title}</h2>
+              <p className="blog-post-meta"><Moment format="YYYY/MM/DD">{post.timestamp}</Moment> by {post.author}</p>
             <hr />
-            <p className="blog-post-meta">
-              <span style={{ marginRight: "5px" }} onClick={this.upVotePost}><i className="fa fa-level-up" aria-hidden="true"></i></span>
-                {post.voteScore}
-              <span style={{ marginLeft: "5px" }} onClick={this.downVotePost}><i className="fa fa-level-down" aria-hidden="true"></i></span>
-              <i style={{ marginLeft: "30px" }} className="fa fa-comments" aria-hidden="true"></i> {comments.length}
-            </p>
-            <Link className="card-link" to = {{
-              pathname: `${history.location.pathname}/edit`
-            }}>Edit Post</Link>
-            <span className="card-link" onClick={this.removePost}><a>Delete Post</a></span>
-          </div>
-          <div className="container">
-            <div className="comments">
-              <h3 className="mb-2">Comments</h3>
-              <form style={{ paddingBottom: "20px" }} onSubmit={handleSubmit(this.onSubmit)}>
-                <Field
-                  label="Author"
-                  name="author"
-                  component={this.renderField}
-                />
-                <Field
-                  label="Body"
-                  name="body"
-                  component={this.renderField}
-                />
-                <button type="submit" className="btn btn-primary">Submit</button>
-              </form>
-              {comments.map((comment) => (
-                <div key={comment.id} className="comment">
-                  <div className="comment-content">
-                    <h6 className="small comment-meta">
-                      {comment.author}
-                      <Moment style={{ marginLeft: "5px" }} format="YYYY/MM/DD">{comment.timestamp}</Moment>
-                      <span style={{ marginRight: "5px", marginLeft: "10px" }} onClick={this.upVoteComment.bind(this, comment)}><i className="fa fa-level-up" aria-hidden="true"></i></span>
-                        {comment.voteScore}
-                      <span style={{ marginLeft: "5px", marginRight: "10px" }} onClick={this.downVoteComment.bind(this, comment)}><i className="fa fa-level-down" aria-hidden="true"></i></span>
-                      <Link to={{
-                        pathname: `${history.location.pathname}/comments/${comment.id}/edit`
-                      }}>Edit</Link>
-                      <span style={{marginLeft: "10px"}} onClick={this.deleteComment.bind(this, comment)}>Delete</span>
-                    </h6>
-                    <div className="comment-body">
-                      <p>{comment.body}</p>
+              <div className="card-body">
+                <p>{post.body}</p>
+              </div>
+              <hr />
+              <p className="blog-post-meta">
+                <span style={{ marginRight: "5px" }} onClick={this.upVotePost}><i className="fa fa-level-up" aria-hidden="true"></i></span>
+                  {post.voteScore}
+                <span style={{ marginLeft: "5px" }} onClick={this.downVotePost}><i className="fa fa-level-down" aria-hidden="true"></i></span>
+                <i style={{ marginLeft: "30px" }} className="fa fa-comments" aria-hidden="true"></i> {comments.length}
+              </p>
+              <Link className="card-link" to = {{
+                pathname: `${history.location.pathname}/edit`
+              }}>Edit Post</Link>
+              <span className="card-link" onClick={this.removePost}><a>Delete Post</a></span>
+            </div>
+            <div className="container">
+              <div className="comments">
+                <h3 className="mb-2">Comments</h3>
+                <form style={{ paddingBottom: "20px" }} onSubmit={handleSubmit(this.onSubmit)}>
+                  <Field
+                    label="Author"
+                    name="author"
+                    component={this.renderField}
+                  />
+                  <Field
+                    label="Body"
+                    name="body"
+                    component={this.renderField}
+                  />
+                  <button type="submit" className="btn btn-primary">Submit</button>
+                </form>
+                {comments.map((comment) => (
+                  <div key={comment.id} className="comment">
+                    <div className="comment-content">
+                      <h6 className="small comment-meta">
+                        {comment.author}
+                        <Moment style={{ marginLeft: "5px" }} format="YYYY/MM/DD">{comment.timestamp}</Moment>
+                        <span style={{ marginRight: "5px", marginLeft: "10px" }} onClick={this.upVoteComment.bind(this, comment)}><i className="fa fa-level-up" aria-hidden="true"></i></span>
+                          {comment.voteScore}
+                        <span style={{ marginLeft: "5px", marginRight: "10px" }} onClick={this.downVoteComment.bind(this, comment)}><i className="fa fa-level-down" aria-hidden="true"></i></span>
+                        <Link to={{
+                          pathname: `${history.location.pathname}/comments/${comment.id}/edit`
+                        }}>Edit</Link>
+                        <span style={{marginLeft: "10px"}} onClick={this.deleteComment.bind(this, comment)}>Delete</span>
+                      </h6>
+                      <div className="comment-body">
+                        <p>{comment.body}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <h2>
+            404: Cannot find that post. Please try again.
+          </h2>
+        )}
+      </div>
     )
   }
 }

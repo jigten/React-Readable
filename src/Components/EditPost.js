@@ -7,7 +7,7 @@ import { editPost, fetchPost } from '../Actions'
 class EditPost extends Component {
 
   componentDidMount() {
-    this.props.loadPost(this.props.match.params.post_id)
+    this.props.fetchPost(this.props.match.params.post_id)
   }
 
   renderField = (field) => {
@@ -33,14 +33,13 @@ class EditPost extends Component {
 
   onSubmit = (values) => {
     const { post } = this.props
-    this.props.updatePost(post.id, values, () => {
+    this.props.editPost(post.id, values, () => {
       this.props.history.push('/')
     })
   }
 
   render() {
     const { handleSubmit } = this.props
-    console.log(this.props)
 
     return (
       <div className="container">
@@ -86,18 +85,11 @@ function mapStateToProps({ posts }, ownProps) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    loadPost: (postId) => dispatch(fetchPost(postId)),
-    updatePost: (id, post, callback) => dispatch(editPost(id, post, callback))
-  }
-}
-
 export default reduxForm({
   validate,
   form: 'PostsEditForm',
   enableReinitialize: true,
   keepDirtyOnReinitialize: true
 })(
-  connect(mapStateToProps, mapDispatchToProps)(EditPost)
+  connect(mapStateToProps, {fetchPost, editPost})(EditPost)
 )
