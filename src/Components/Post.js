@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPostShow, fetchComments, votePost, createComment, voteComment, deleteAPost, deleteComment } from '../Actions'
+import { fetchPostShow, votePost, deleteAPost } from '../Actions/post'
+import { fetchComments, createComment, voteComment, deleteComment } from '../Actions/comment'
 import Moment from 'react-moment';
 import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'

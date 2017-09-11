@@ -5,7 +5,6 @@ let token = localStorage.token
 if (!token)
   token = localStorage.token = Math.random().toString(36).substr(-8)
 
-export const FETCH_CATEGORIES = 'FETCH_CATEGORIES'
 export const FETCH_POST = 'FETCH_POST'
 export const FETCH_POST_SHOW = 'FETCH_POST_SHOW'
 export const FETCH_POSTS = 'FETCH_POSTS'
@@ -13,28 +12,10 @@ export const SORT_DATE = 'SORT_DATE'
 export const SORT_SCORE = 'SORT_SCORE'
 export const CREATE_POST = 'CREATE_POST'
 export const EDIT_POST = 'EDIT_POST'
-export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS'
 export const VOTE_POST = 'VOTE_POST'
+export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS'
 export const DELETE_POST = 'DELETE_POST'
 export const DELETE_SINGLE_POST = 'DELETE_SINGLE_POST'
-export const FETCH_POST_COMMENTS = 'FETCH_POST_COMMENTS'
-export const FETCH_COMMENT = 'FETCH_COMMENT'
-export const CREATE_COMMENT = 'CREATE_COMMENT'
-export const VOTE_COMMENT = 'VOTE_COMMENT'
-export const EDIT_COMMENT = 'EDIT_COMMENT'
-export const DELETE_COMMENT = 'DELETE_COMMENT'
-
-export function fetchCategories() {
-  const url = `${ROOT_URL}/categories`
-  const request = axios.get(url, {
-     headers: {'Authorization': token},
-  })
-
-  return {
-    type: FETCH_CATEGORIES,
-    payload: request
-  }
-}
 
 export function sortScore() {
   return {
@@ -147,76 +128,6 @@ export function deleteAPost(id, callback) {
 
   return {
     type: DELETE_SINGLE_POST,
-    id
-  }
-}
-
-export function fetchComments(id) {
-  const url = `${ROOT_URL}/posts/${id}/comments`
-  const request = axios.get(url, {
-    headers: {'Authorization': token}
-  })
-
-  return {
-    type: FETCH_POST_COMMENTS,
-    payload: request
-  }
-}
-
-export function fetchComment(id) {
-  const url = `${ROOT_URL}/comments/${id}`
-  const request = axios.get(url, {
-    headers: {'Authorization': token}
-  })
-
-  return {
-    type: FETCH_COMMENT,
-    payload: request
-  }
-}
-
-export function createComment(values) {
-  const url = `${ROOT_URL}/comments`
-
-  axios.post(url, values, {
-    headers: {'Authorization': token}
-  })
-
-  return {
-    type: CREATE_COMMENT,
-    payload: values
-  }
-}
-
-export function voteComment(id, values) {
-  const request = axios.post(`${ROOT_URL}/comments/${id}`, values, {
-    headers: {'Authorization': token}
-  })
-
-  return {
-    type: VOTE_COMMENT,
-    payload: request
-  }
-}
-
-export function editComment(id, values, callback) {
-  const request = axios.put(`${ROOT_URL}/comments/${id}`, values, {
-    headers: {'Authorization': token}
-  }).then(() => callback())
-
-  return {
-    type: EDIT_COMMENT,
-    payload: request
-  }
-}
-
-export function deleteComment(id) {
-  axios.delete(`${ROOT_URL}/comments/${id}`, {
-    headers: {'Authorization': token}
-  })
-
-  return {
-    type: DELETE_COMMENT,
     id
   }
 }

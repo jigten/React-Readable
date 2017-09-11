@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCatPosts, votePost, deletePost, sortDate, sortScore } from '../Actions'
+import * as actions from '../Actions/post'
 import { Link } from 'react-router-dom'
 import Moment from 'react-moment';
 
 class Category extends Component {
 
   componentDidMount() {
-    this.props.loadPosts(this.props.match.params.category)
+    this.props.fetchCatPosts(this.props.match.params.category)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -95,14 +95,4 @@ class Category extends Component {
     }
   }
 
-  function mapDispatchToProps(dispatch) {
-    return {
-      loadPosts: (category) => dispatch(fetchCatPosts(category)),
-      votePost: (postId, type) => dispatch(votePost(postId, type)),
-      deletePost: (postId) => dispatch(deletePost(postId)),
-      sortScore: () => dispatch(sortScore()),
-      sortDate: () => dispatch(sortDate())
-    }
-  }
-
-  export default connect(mapStateToProps, mapDispatchToProps)(Category)
+  export default connect(mapStateToProps, actions)(Category)

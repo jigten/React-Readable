@@ -1,4 +1,4 @@
-import { FETCH_POST_COMMENTS, VOTE_COMMENT, CREATE_COMMENT, FETCH_COMMENT, DELETE_COMMENT } from '../Actions/index'
+import { FETCH_POST_COMMENTS, VOTE_COMMENT, CREATE_COMMENT, FETCH_COMMENT, DELETE_COMMENT } from '../Actions/comment'
 
 export default function(state = [], action) {
 

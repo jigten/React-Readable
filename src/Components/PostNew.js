@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchCategories, createPost } from '../Actions'
+import { createPost } from '../Actions/post'
+import { fetchCategories } from '../Actions/category'
 
 class PostsNew extends Component {
 

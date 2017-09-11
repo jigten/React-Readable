@@ -1,4 +1,4 @@
-import { FETCH_CATEGORIES } from '../Actions/index'
+import { FETCH_CATEGORIES } from '../Actions/category'
 
 export default function(state = [], action) {
 

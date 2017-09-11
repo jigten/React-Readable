@@ -3,7 +3,8 @@ import { reducer as formReducer } from 'redux-form'
 import CategoryReducer from './reducer_category'
 import PostReducer from './reducer_post'
 import CommentReducer from './reducer_comment'
-import { FETCH_POST, FETCH_COMMENT } from '../Actions/index'
+import { FETCH_POST } from '../Actions/post'
+import { FETCH_COMMENT } from '../Actions/comment'
 
 const rootReducer = combineReducers({
   categories: CategoryReducer,

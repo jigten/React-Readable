@@ -1,4 +1,4 @@
-import { FETCH_POST, SORT_SCORE, SORT_DATE, FETCH_POST_SHOW, FETCH_POSTS, FETCH_CATEGORY_POSTS, VOTE_POST, DELETE_POST } from '../Actions/index'
+import { FETCH_POST, SORT_SCORE, SORT_DATE, FETCH_POST_SHOW, FETCH_POSTS, FETCH_CATEGORY_POSTS, VOTE_POST, DELETE_POST } from '../Actions/post'
 
 export default function(state = [], action) {
 
