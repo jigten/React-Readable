@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { fetchPostShow, votePost, deleteAPost } from '../Actions/post'
 import { fetchComments, createComment, voteComment, deleteComment } from '../Actions/comment'
 import Moment from 'react-moment';
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, reset } from 'redux-form'
 import { Link } from 'react-router-dom'
 
 class Post extends Component {
@@ -70,6 +70,7 @@ class Post extends Component {
     values['timestamp'] = Date.now()
     values['parentId'] = this.props.posts[0].id
     this.props.createComment(values)
+    this.props.resetCommentForm('CommentsNewForm')
   }
 
   removePost = () => {
@@ -87,9 +88,11 @@ class Post extends Component {
     const post = this.props.posts[0]
     const { comments, history } = this.props
     const { handleSubmit } = this.props
+    console.log(this.props)
+
     return(
       <div>
-        {post ? (
+        {post && Object.keys(post).length !== 0 ? (
           <div style={{ paddingTop: "20px" }} className="container">
             <div className="blog-post">
               <h2 className="blog-post-title">{post.title}</h2>
@@ -188,7 +191,8 @@ function mapDispatchToProps(dispatch) {
     createComment: (comment) => dispatch(createComment(comment)),
     voteComment: (commentId, type) => dispatch(voteComment(commentId, type)),
     deletePost: (postId, callback) => dispatch(deleteAPost(postId, callback)),
-    removeComment: (commentId) => dispatch(deleteComment(commentId))
+    removeComment: (commentId) => dispatch(deleteComment(commentId)),
+    resetCommentForm: (formName) => dispatch(reset(formName))
   }
 }
 

@@ -39,26 +39,35 @@ class EditPost extends Component {
   }
 
   render() {
+    const post = this.props.post
     const { handleSubmit } = this.props
 
     return (
-      <div className="container">
-        <form onSubmit={handleSubmit(this.onSubmit)}>
-          <Field
-            label="Title"
-            name="title"
-            component={this.renderField}
-          />
+      <div>
+      {post && Object.keys(post).length !== 0 ? (
+        <div className="container">
+          <form onSubmit={handleSubmit(this.onSubmit)}>
+            <Field
+              label="Title"
+              name="title"
+              component={this.renderField}
+            />
 
-          <Field
-            label="Body"
-            name="body"
-            component={this.renderField}
-          />
+            <Field
+              label="Body"
+              name="body"
+              component={this.renderField}
+            />
 
-          <button type="submit" className="btn btn-primary">Submit</button>
-          <Link to="/" className="btn btn-danger">Cancel</Link>
-        </form>
+            <button type="submit" className="btn btn-primary">Submit</button>
+            <Link to="/" className="btn btn-danger">Cancel</Link>
+          </form>
+        </div>
+      ) : (
+        <h2>
+          404: Cannot find that post. Please try again.
+        </h2>
+      )}
       </div>
     )
   }
