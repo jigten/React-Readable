@@ -13,7 +13,7 @@ class Category extends Component {
   componentWillReceiveProps(nextProps) {
     let nextCategory = nextProps.match.params.category
     if (nextCategory !== this.props.match.params.category) {
-      this.props.loadPosts(nextCategory)
+      this.props.fetchCatPosts(nextCategory)
     }
   }
 
